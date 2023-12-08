@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 # myteamapp
 
 A new Flutter project.
@@ -23,3 +24,6 @@ git commit -m "Initial commit with content"
 =======
 
 >>>>>>> aa28fe2bea57ccf38007eb76e2e1db988345b23a
+=======
+
+>>>>>>> refs/remotes/origin/main
