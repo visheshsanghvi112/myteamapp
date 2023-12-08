@@ -6,15 +6,35 @@ class LandingScreen extends StatefulWidget {
   _LandingScreenState createState() => _LandingScreenState();
 }
 
-class _LandingScreenState extends State<LandingScreen> {
+class _LandingScreenState extends State<LandingScreen> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
   @override
   void initState() {
     super.initState();
-    _navigateToWelcomePage();
+
+    _controller = AnimationController(
+      duration: Duration(seconds: 2),
+      vsync: this,
+    );
+
+    _animation = Tween<double>(
+      begin: 0.5,
+      end: 1.0,
+    ).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Curves.easeInOut,
+      ),
+    );
+
+    _startAnimation();
   }
 
-  // Function to navigate to the welcome page after a delay
-  void _navigateToWelcomePage() {
+  // Function to start the animations and navigate to the welcome page
+  void _startAnimation() {
+    _controller.forward();
     Future.delayed(Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
@@ -24,15 +44,24 @@ class _LandingScreenState extends State<LandingScreen> {
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         color: Colors.green,
         child: Center(
-          child: Image.asset(
-            'assets/hsnc_logo.png',
-            width: 200,
-            height: 200,
+          child: ScaleTransition(
+            scale: _animation,
+            child: Image.asset(
+              'assets/hsnc_logo.png',
+              width: 300,
+              height: 300,
+            ),
           ),
         ),
       ),

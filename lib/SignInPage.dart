@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'SignUpPage.dart';
 import 'ForgotPasswordPage.dart';
-import 'ProfilePage.dart';
+import 'home.dart'; // Import home.dart
 
 class SignInPage extends StatelessWidget {
   SignInPage({Key? key}) : super(key: key);
@@ -10,23 +9,10 @@ class SignInPage extends StatelessWidget {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  // Function to check login credentials against signup data
   Future<bool> checkLoginCredentials(String username, String password) async {
-    await Hive.initFlutter();
-    await Hive.openBox("accounts");
-
-    Box _boxAccounts = Hive.box("accounts");
-
-    if (_boxAccounts.containsKey(username) &&
-        _boxAccounts.get(username) == password) {
-      // Valid credentials
-      _boxAccounts.close();
-      return true;
-    } else {
-      // Invalid credentials
-      _boxAccounts.close();
-      return false;
-    }
+    // Replace this with your authentication logic
+    // For now, assume successful login for any non-empty username and password
+    return username.isNotEmpty && password.isNotEmpty;
   }
 
   @override
@@ -95,25 +81,27 @@ class SignInPage extends StatelessWidget {
                 onPressed: () async {
                   String username = _usernameController.text;
                   String password = _passwordController.text;
-
-                  // Check login credentials against signup data
                   bool isValidCredentials = await checkLoginCredentials(username, password);
 
                   if (isValidCredentials) {
-                    // Successful login logic
-                    // Navigate to the profile page
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ProfilePage(
-                          username: username,
-                          email: 'example@email.com',
+                    if (username.toLowerCase() == 'admin') {
+                      showDialog(
+                        context: context,
+                        builder: (context) => _buildAdminDialog(context),
+                      );
+                    } else {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => HomePage(),
                         ),
-                      ),
-                    );
+                      );
+                    }
                   } else {
-                    // Invalid credentials logic
-                    // Show an error message or perform other actions
+                    showDialog(
+                      context: context,
+                      builder: (context) => _buildErrorDialog(context),
+                    );
                   }
                 },
                 style: ElevatedButton.styleFrom(
@@ -122,62 +110,94 @@ class SignInPage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                 ),
-                child: Container(
-                  width: double.infinity,
-                  height: 50,
-                  alignment: Alignment.center,
-                  child: const Text(
-                    'Login',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                ),
+                child: _buildLoginButton(),
               ),
               const SizedBox(height: 10),
               TextButton(
-                onPressed: () {
-                  // Navigate to the forgot password page
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ForgotPasswordPage(),
-                    ),
-                  );
-                },
-                style: TextButton.styleFrom(
-                  padding: EdgeInsets.zero,
+                onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ForgotPasswordPage(),
+                  ),
                 ),
+                style: TextButton.styleFrom(padding: EdgeInsets.zero),
                 child: const Text('Forgot password? Reset here'),
               ),
               const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text("Don't have an account yet?"),
-                  const SizedBox(width: 5),
-                  TextButton(
-                    onPressed: () {
-                      // Navigate to the create account page
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SignUpPage(),
-                        ),
-                      );
-                    },
-                    style: TextButton.styleFrom(
-                      padding: EdgeInsets.zero,
-                    ),
-                    child: const Text(
-                      'Create an account',
-                      style: TextStyle(color: Colors.blue),
-                    ),
-                  ),
-                ],
-              ),
+              _buildCreateAccountLink(context),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildAdminDialog(BuildContext context) {
+    return AlertDialog(
+      title: Text('Welcome Admin!'),
+      content: Text('You have successfully logged in.'),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.pop(context);
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => HomePage(),
+              ),
+            );
+          },
+          child: Text('OK'),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildErrorDialog(BuildContext context) {
+    return AlertDialog(
+      title: Text('Invalid Credentials'),
+      content: Text('Please check your username and password.'),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: Text('OK'),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildLoginButton() {
+    return Container(
+      width: double.infinity,
+      height: 50,
+      alignment: Alignment.center,
+      child: const Text(
+        'Login',
+        style: TextStyle(fontSize: 18),
+      ),
+    );
+  }
+
+  Widget _buildCreateAccountLink(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Text("Don't have an account yet?"),
+        const SizedBox(width: 5),
+        TextButton(
+          onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => SignUpPage(),
+            ),
+          ),
+          style: TextButton.styleFrom(padding: EdgeInsets.zero),
+          child: const Text(
+            'Create an account',
+            style: TextStyle(color: Colors.blue),
+          ),
+        ),
+      ],
     );
   }
 }

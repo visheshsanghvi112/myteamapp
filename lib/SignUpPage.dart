@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'SignInPage.dart'; // Import the SignInPage
 
 class SignUpPage extends StatelessWidget {
   SignUpPage({Key? key}) : super(key: key);
@@ -72,9 +73,10 @@ class SignUpPage extends StatelessWidget {
                 if (!_boxAccounts.containsKey(username)) {
                   // Check if the username is not already taken
                   _boxAccounts.put(username, password);
-                  // You might want to navigate to the login page or perform other actions
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Account created successfully!')),
+                  // Navigate to the SignInPage after successful sign up
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SignInPage()),
                   );
                 } else {
                   // Username is already taken

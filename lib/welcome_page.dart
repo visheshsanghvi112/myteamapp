@@ -12,7 +12,7 @@ class WelcomePage extends StatelessWidget {
             // Animated Logo
             TweenAnimationBuilder<double>(
               tween: Tween<double>(begin: 0, end: 1),
-              duration: Duration(milliseconds: 500),
+              duration: const Duration(milliseconds: 500),
               builder: (context, value, child) {
                 return Transform.translate(
                   offset: Offset(0.0, -50 * value),
@@ -27,24 +27,24 @@ class WelcomePage extends StatelessWidget {
                 );
               },
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // Welcome Text
-            Text(
+            const Text(
               'Welcome to KC',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            Text(
+            const Text(
               'Sports Team App',
               style: TextStyle(
                 fontSize: 18,
                 color: Colors.grey,
               ),
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
 
             // Buttons
             ElevatedButton(
@@ -53,73 +53,73 @@ class WelcomePage extends StatelessWidget {
               },
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(52),
+                  borderRadius: BorderRadius.circular(15),
                 ),
                 primary: Colors.white,
               ),
               child: Container(
-                width: 319,
-                height: 60,
+                width: 250,
+                height: 50,
                 alignment: Alignment.center,
-                child: Text(
+                child: const Text(
                   'Login with Google',
                   style: TextStyle(
                     color: Colors.red,
-                    fontSize: 18,
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
                 // Handle the email login action
               },
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(52),
+                  borderRadius: BorderRadius.circular(15),
                 ),
-                primary: Color(0xff376aed),
+                primary: const Color(0xff376aed),
               ),
               child: Container(
-                width: 319,
-                height: 60,
+                width: 250,
+                height: 50,
                 alignment: Alignment.center,
-                child: Text(
-                  'Login With Email',
+                child: const Text(
+                  'Login With Facebook',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 18,
+                    fontSize: 16,
                   ),
                 ),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
                 // Handle the Facebook login action
               },
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(52),
+                  borderRadius: BorderRadius.circular(15),
                 ),
-                primary: Color(0xff04754d),
+                primary: const Color(0xff0e5d0e),
               ),
               child: Container(
-                width: 318,
-                height: 60,
+                width: 250,
+                height: 50,
                 alignment: Alignment.center,
-                child: Text(
-                  'Login With Facebook',
+                child: const Text(
+                  'Login With Email',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 18,
+                    fontSize: 16,
                   ),
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // Sign In Button with Navigation
             ElevatedButton(
@@ -132,19 +132,19 @@ class WelcomePage extends StatelessWidget {
               },
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(52),
+                  borderRadius: BorderRadius.circular(15),
                 ),
                 primary: Colors.blue, // Change the color as needed
               ),
               child: Container(
-                width: 318,
-                height: 60,
+                width: 250,
+                height: 50,
                 alignment: Alignment.center,
-                child: Text(
+                child: const Text(
                   'Sign In',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 18,
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
