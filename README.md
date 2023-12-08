@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 # myteamapp
 
 A new Flutter project.
@@ -19,3 +20,6 @@ samples, guidance on mobile development, and a full API reference.
 git add .
 git commit -m "Initial commit with content"
 >>>>>>> origin/main
+=======
+
+>>>>>>> aa28fe2bea57ccf38007eb76e2e1db988345b23a
